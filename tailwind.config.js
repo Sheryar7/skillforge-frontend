@@ -23,6 +23,9 @@ export default {
                     100: '#F3F4F6',
                     50: '#F9FAFB',
                 },
+                brand: {
+                    DEFAULT: "#F54927"
+                }
             },
             fontFamily: {
                 'lobster': ['Lobster', 'cursive'],

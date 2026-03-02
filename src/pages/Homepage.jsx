@@ -7,9 +7,9 @@ import Banner from "../assets/banner.mp4";
 import Code from "../components/Home/Code";
 import TimeLine from "../components/Home/TimeLine";
 // import Languagesection from "../components/Home/Languagesection";
-import ExploreMore from "../components/Home/ExploreMore" 
-import Footer from "../components/Footer" 
-import InstructorSection from "../components/Home/InstructorSection" 
+import ExploreMore from "../components/Home/ExploreMore"
+import Footer from "../components/Footer"
+import InstructorSection from "../components/Home/InstructorSection"
 import ReviewSlider from "../components/ReviewSlider"
 
 const Homepage = () => {
@@ -35,7 +35,7 @@ const Homepage = () => {
                         Empower Your Future with <HighlightText text="Coding Skills" />
                     </div>
 
-                    <div className="text-gray-300 text-sm sm:text-md font-semibold w-full sm:w-[90%] mt-4 text-center">
+                    <div className="text-gray-300 text-sm sm:text-md font-semibold w-full sm:w-[60%] mt-4 text-center">
                         Our courses are designed to help you unlock your potential and excel in the tech industry. With hands-on learning and expert guidance, you'll gain the knowledge needed to tackle real-world challenges and thrive in a digital world.
                     </div>
 
@@ -87,7 +87,7 @@ const Homepage = () => {
     </div>
 </body>
 </html>`}
-                            codeColor={"text-yellow-300"}
+                            codeColor={"text-blue-600"}
                         />
                     </div>
                     <div className="w-full px-4">
@@ -122,7 +122,7 @@ def display_tasks():
     print("Tasks:")
     for task in tasks:
         print(f"- {task}")`}
-                            codeColor={"text-orange-300"}
+                            codeColor={"text-orange-400"}
                         />
 
                         <ExploreMore />
@@ -167,21 +167,23 @@ def display_tasks():
                             </div>
                         </div>
 
+
+
                         <TimeLine />
                         {/* <Languagesection/> */}
                     </div>
 
                     {/* section 4 */}
-                    <div className="w-11/12 mx-auto my-8 max-w-max overflow-hidden flex flex-col items-center justify-between gap-6 first-letter bg-slate-900 text-white">
+                    <div className="w-full mx-auto my-8 max-w-max overflow-hidden flex flex-col items-center justify-between gap-6 first-letter bg-slate-900 text-white">
                         <InstructorSection />
 
                     </div>
                     {/* section 5 */}
 
-                        <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-semibold mt-10">Review from Other Learners</h2>
+                    <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-semibold mt-10">Review from Other Learners</h2>
                     <h2 className="text-center text-gray-400 py-2 text-lg">Review from Other Learners</h2>
 
-                      <ReviewSlider /> 
+                    <ReviewSlider />
                     <Footer />
 
 

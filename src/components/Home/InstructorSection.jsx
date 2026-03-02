@@ -11,7 +11,7 @@ function InstructorSection() {
         <img
           src={Instuctor || "/placeholder.svg"}
           alt="beAnInstructor"
-          className="w-[12rem] md:w-[15rem] shadow-[-5px_-5px_0px_0px_rgba(109,40,217)]"
+          className="w-[12rem] md:w-[15rem] shadow-[-5px_-5px_0px_0px_rgba(255,255,255,1)]"
         />
       </div>
       <div className="w-full md:w-[50%] flex flex-col justify-center gap-4 md:gap-5 text-center md:text-left">

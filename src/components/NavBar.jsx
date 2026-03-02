@@ -68,10 +68,10 @@ function NavBar() {
         {/* <div className="">Logo</div> */}
         {/* <img className="w-[60px] h-[60px] rounded-full" src={logo} alt="learner" loading="lazy"/> */}
         <div className="flex flex-col">
-        <p className="font-lobster text-xl font-bold text-purple-600">SkillForge</p>
+        <p className="font-lobster text-xl font-bold text-orange-400">SkillForge</p>
         <div className="flex items-center gap-2">
-        <div className=" bg-purple-600 w-[80px] h-[4px] rounded-sm"> </div>
-        <div className="bg-purple-600 w-[4px] h-[4px] rounded-full"></div>
+        <div className=" bg-orange-400 w-[80px] h-[4px] rounded-sm"> </div>
+        <div className="bg-orange-400 w-[4px] h-[4px] rounded-full"></div>
         </div>
         </div>
         {/* Hamburger Menu Button */}
@@ -128,9 +128,9 @@ function NavBar() {
                   <li
                     className={`cursor-pointer ${
                       location.pathname === item.link
-                        ? "text-purple-800"
+                        ? "text-orange-600"
                         : "text-white"
-                    } hover:text-purple-600 transition-all duration-200 hover:scale-95`}
+                    } hover:text-orange-400 transition-all duration-200 hover:scale-95`}
                   >
                     {item.title}
                   </li>
@@ -152,7 +152,7 @@ function NavBar() {
             <div className="relative">
               <CiShoppingCart className="w-6 h-6" />
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-orange-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
@@ -174,18 +174,22 @@ function NavBar() {
             </Link>
           </>
         )}
-        {token && (
+        {token && user && (
           <>
             <div className="relative group cursor-pointer pb-2">
               <p className="flex items-center gap-1">
                 
-                { user.image ? (
+                { user?.image ? (
                             <img 
                             className="rounded-full w-[35px] object-cover h-[35px] bg-orange-500"
                             src={user?.image} 
                             alt={`profile ${user?.firstName}`}
                         />):(
-                            <Avatar color={Avatar.getRandomColor('sitebase', ['green', 'orange','red'])} name={`${user.firstName} ${user.lastName}`} size="40" round={true} />
+                            <Avatar 
+                            color={Avatar.getRandomColor('sitebase', ['green', 'orange','red'])} 
+                            name={`${user?.firstName || ""} ${user?.lastName || ""}`} 
+                            size="40" 
+                            round={true} />
                         )
                         }
                 

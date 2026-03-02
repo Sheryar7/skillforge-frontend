@@ -1,3 +1,60 @@
+// // No BASE_URL needed here
+
+// export const categories = {
+//   CATEGORIES_API: "/course/getCategories",
+// };
+
+// export const settingEndpoints = {
+//   RESETPASSWORDTOKEN_API: "/auth/reset-password-token",
+//   RESETPASSWORD_API: "/auth/reset-password",
+// };
+
+// export const authEndpoints = {
+//   SENDOTP_API: "/auth/sendOTP",
+//   SIGNUP_API: "/auth/signup",
+//   LOGIN_API: "/auth/login",
+//   REFRESH_API: "/auth/refresh-token",
+// };
+
+// export const profileEndpoints = {
+//   UPDATEPROPIC_API: "/profile/updateProfilePicture",
+//   UPDATEPERSONALINFO_API: "/profile/updateProfile",
+//   INSTRUCTOR_STATS_API: "/profile/instructorDashboard",
+// };
+
+// export const catalogEndpoints = {
+//   GET_CATALOG_DETAIL_API: "/course/getCategoryPageDetails",
+// };
+
+// export const coursesEndpoints = {
+//   GET_USER_ENROLLED_COURSES_API: "/course/getEnrolledCourses",
+//   CREATE_COURSE_API: "/course/createCourse",
+//   EDIT_COURSE_API: "/course/editCourse",
+//   GET_INSTRUCTORE_COURSE_API: "/course/getInstructorCourse",
+//   GET_FULL_COURSE_API: "/course/getFullCourseDetails",
+//   DELETE_COURSE_API: "/course/deleteCourse",
+//   GET_COURSE_API: "/course/getCourseDetails",
+//   BUY_COURSE_API: "/course/buyCourse",
+//   GET_ENROLLED_COURSE_API: "/course/getEnrolledCourses",
+//   UPDATE_COURSE_PROGRRESS_API: "/course/update-courseProgress",
+//   GET_COURSE_PROGRRESS_API: "/course/get-courseProgress",
+// };
+
+// export const sectionEndpoints = {
+//   CREATE_SECTION_API: "/course/addSection",
+//   UPDATE_SECTION_API: "/course/updateSection",
+//   DELETE_SECTION_API: "/course/deleteSection",
+//   CREATE_SUB_SECTION_API: "/course/addSubSection",
+//   UPDATE_SUB_SECTION_API: "/course/updateSubSection",
+//   DELETE_SUB_SECTION_API: "/course/deleteSubSection",
+// };
+
+// export const ratingAndReviewEndpoints = {
+//   CREATE_RATING_API: "/course/createRating",
+//   GET_RATING_API: "/course/getRating",
+//   GET_AVG_RATING_API: "/course/getAverageReviews",
+// };
+
 const BASE_URL = `${import.meta.env.VITE_BASE_URL}/api/v1`;
 // console.log(import.meta.env.VITE_BASE_URL)
 export const categories = {
@@ -53,7 +110,5 @@ export const ratingAndReviewEndpoints = {
     CREATE_RATING_API: `${BASE_URL}/course/createRating`,
     GET_RATING_API: `${BASE_URL}/course/getRating`,
     GET_AVG_RATING_API: `${BASE_URL}/course/getAverageReviews`,
-    
-
-
+     
 };
