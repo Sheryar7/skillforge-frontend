@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React,{ useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Trash2, Edit2, ChevronDown, PanelTopOpen, Plus } from "lucide-react"
 import { deleteSection, deleteSubSection } from "../../../services/section"
@@ -53,7 +53,6 @@ function NestedView({ handleEditSectionName }) {
                 >
                   <Edit2 className="w-4 h-4 text-blue-400" />
                 </button>
-
                 <button
                   onClick={(e) => {
                     e.preventDefault()
@@ -70,7 +69,6 @@ function NestedView({ handleEditSectionName }) {
                 >
                   <Trash2 className="w-4 h-4 text-red-400" />
                 </button>
-
                 <ChevronDown className="w-4 h-4 text-gray-400" />
               </div>
             </summary>
@@ -81,13 +79,10 @@ function NestedView({ handleEditSectionName }) {
                   key={subSec._id}
                   className="flex justify-between items-center py-2 border-b border-gray-700 last:border-b-0"
                 >
-                  <div
-                    onClick={() => setView(subSec)}
-                    className="flex items-center space-x-2 cursor-pointer">
+                  <div onClick={() => setView(subSec)} className="flex items-center space-x-2 cursor-pointer">
                     <PanelTopOpen className="w-4 h-4 text-gray-400" />
                     <p className="text-white">{subSec.title}</p>
                   </div>
-                  
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={() => setEdit({ ...subSec, sectionId: section._id })}

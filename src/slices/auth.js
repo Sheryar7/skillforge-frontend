@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const savedToken = localStorage.getItem("token");
+const normalizedToken = savedToken ? savedToken.replace(/^\"|\"$/g, "") : null;
+
 const initialState = {
-    signupData:null,
-    token: localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null, //access token
+    signupData: null,
+    token: normalizedToken,
     loading: false
 }
 

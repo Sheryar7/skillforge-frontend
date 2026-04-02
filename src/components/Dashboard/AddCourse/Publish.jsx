@@ -27,7 +27,7 @@ function Publish() {
   };
 
   useEffect(() => { 
-    if(course?.status === "published") { // if course is already published and user is editing it
+    if(course?.status === "Published") { // if course is already Published and user is editing it
       setValue("isPublic", true); 
     }
   }, [setValue, course]);
@@ -38,9 +38,9 @@ function Publish() {
   }
 
   const handleCoursePublish = async () => {
-    if(course?.status === "published" && getValues("isPublic") === true ||
-      course?.status !== "draft" && getValues("isPublic") === false) {
-        // no updates made, so no need to update the course means if it was already draft/ published and user didn't change the status
+    if(course?.status === "Published" && getValues("isPublic") === true ||
+      course?.status !== "Draft" && getValues("isPublic") === false) {
+        // no updates made, so no need to update the course means if it was already Draft/ Published and user didn't change the status
 
         goToCourses();
       return;
@@ -48,7 +48,7 @@ function Publish() {
 
     //update course status
     console.log(getValues())
-    const courseStatus = getValues("isPublic") ? "published" : "draft";
+    const courseStatus = getValues("isPublic") ? "Published" : "Draft";
     console.log(courseStatus)
     const formData = new FormData();
 

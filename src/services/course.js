@@ -5,8 +5,7 @@ import { coursesEndpoints } from "./apis";
 
 export async function fetchInstructorCourse (token) {
     try {
-        const res = await apiConnector("GET", coursesEndpoints.GET_INSTRUCTORE_COURSE_API,null, 
-            { Authentication: `Bearer ${token}`})
+        const res = await apiConnector("GET", coursesEndpoints.GET_INSTRUCTORE_COURSE_API);
         
             console.log(res.data.data)
         if(!res.data.success){
@@ -16,14 +15,14 @@ export async function fetchInstructorCourse (token) {
          return res.data.data
     } catch (error) {
         console.log("Error while fetching Instructor Courses",error)
-        toast.error("Couldn't fetch instructor Course")
+        toast.error(error?.response?.data?.message || "Couldn't fetch instructor Course")
     }
 }
+
 export async function deleteCourse (courseId,token) {
     const toastId = toast.loading("Deleting Course...")
     try {
-        const response = await apiConnector("DELETE", coursesEndpoints.DELETE_COURSE_API, { courseId },
-            { Authentication: `Bearer ${token}` })
+        const response = await apiConnector("DELETE", coursesEndpoints.DELETE_COURSE_API, { courseId })
             console.log(response)
         if (!response.data.success) {
             throw new Error(response.data.message)
@@ -33,16 +32,15 @@ export async function deleteCourse (courseId,token) {
         return true;
     } catch (error) {
         console.log("Error while deleting Instructor's Course")
-        toast.error("Couldn't delete Course")
+        toast.error(error?.response?.data?.message || "Couldn't delete Course")
     }
 }
+
 export async function enrollInCourses (data,token) {
     const toastId = toast.loading("loading...")
     let result;
     try {
-        const res = await apiConnector("POST", coursesEndpoints.BUY_COURSE_API,data,
-            {authentication : `Bearer ${token}`}
-          )
+        const res = await apiConnector("POST", coursesEndpoints.BUY_COURSE_API, data)
         //   console.log(res.data.success)
 
         if(!res.data.success){
@@ -53,17 +51,17 @@ export async function enrollInCourses (data,token) {
         // console.log('hi')
     } catch (error) {
         console.log("Error while enrolling in course",error)
-        toast.error("Couldn't enroll in course")
+        toast.error(error?.response?.data?.message || "Couldn't enroll in course")
         // toast.error(error.response.data.message)
     }
     toast.dismiss(toastId)
     return result;
 }
+
 export async function getFullDetailOfCourse (courseId,token) {
     // const toastId = toast.loading("Deleting Course...")
     try {
-        const response = await apiConnector("POST", coursesEndpoints.GET_FULL_COURSE_API, { courseId },
-            { Authentication: `Bearer ${token}` })
+        const response = await apiConnector("POST", coursesEndpoints.GET_FULL_COURSE_API, { courseId })
             console.log(response)
         if (!response.data.success) {
             throw new Error(response.data.message)
@@ -72,15 +70,15 @@ export async function getFullDetailOfCourse (courseId,token) {
         return response.data.data;
     } catch (error) {
         console.log("Error while fetching full Course details",error)
-        toast.error("Couldn't fetching full Course details")
+        toast.error(error?.response?.data?.message || "Couldn't fetching full Course details")
     }
 }
+
 export async function markLectureAsCompleted ({courseId, subSectionId}, token){
 
     try {
         console.log(token)
-        const resp = await apiConnector("POST", coursesEndpoints.UPDATE_COURSE_PROGRRESS_API, {courseId, subSectionId},
-            { Authentication: `Bearer ${token}` })
+        const resp = await apiConnector("POST", coursesEndpoints.UPDATE_COURSE_PROGRRESS_API, { courseId, subSectionId })
         console.log(resp)
         if(!resp.data.success){
             throw new Error(resp.data.message)
@@ -90,15 +88,15 @@ export async function markLectureAsCompleted ({courseId, subSectionId}, token){
         return resp.data.success
     } catch (error) {
         console.log("Error while marking lecture as completed",error)
-        toast.error("Couldn't mark lecture as completed")
+        toast.error(error?.response?.data?.message || "Couldn't mark lecture as completed")
     }
 }
+
 export async function courseProgress (courses, token){
 
     try {
         // console.log(token)
-        const resp = await apiConnector("POST", coursesEndpoints.GET_COURSE_PROGRRESS_API, {courses},
-            { Authentication: `Bearer ${token}` })
+        const resp = await apiConnector("POST", coursesEndpoints.GET_COURSE_PROGRRESS_API, { courses })
         // console.log(resp)
         if(!resp.data.success){
             throw new Error(resp.data.message)
@@ -107,6 +105,17 @@ export async function courseProgress (courses, token){
         return resp.data.progress
     } catch (error) {
         // console.log("Coudn't got course progress",error)
-        toast.error(error.message)
+        toast.error(error?.response?.data?.message || error.message || "Couldn't get course progress")
     }
 }
+
+export async function unenrollCourse (courseId, token){
+  try {
+    const response = await apiConnector("POST", coursesEndpoints.UNENROLL_COURSE_API, { courseId });
+
+    return response.data;
+  } catch (error) {
+    console.log("UNENROLL API ERROR:", error);
+    throw error;
+  }
+};

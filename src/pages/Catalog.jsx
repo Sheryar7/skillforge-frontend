@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import Footer from "../components/Footer"
 import { useParams } from "react-router-dom"
 import apiConnector from "../services/apiConnector"
@@ -12,37 +12,69 @@ import { setCatalogPageData } from "../slices/course"
 function Catalog() {
   const { catalogName } = useParams()
   const dispatch = useDispatch()
-  const {catalogPageData} = useSelector( state=> state.course)
-  // const [catalogPageData, setCatalogPageData] = useState(null)
+  const { catalogPageData } = useSelector(state => state.course)
   const [categoryId, setCategoryId] = useState(null)
   const [active, setActive] = useState(false)
-console.log(catalogPageData)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
   useEffect(() => {
     const getCategorys = async () => {
-      const res = await apiConnector("GET", categories.CATEGORIES_API)
-      console.log(res)
-      const category_id = res?.data?.allTag?.filter(
-        (ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName,
-      )[0]._id
-      setCategoryId(category_id)
+      try {
+        const res = await apiConnector("GET", categories.CATEGORIES_API)
+        console.log("FULL CATEGORY RESPONSE:", res)
+        const category_id = res?.data?.data?.filter(
+          (ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName,
+        )[0]?._id
+        console.log("MATCHED CATEGORY ID:", category_id)
+        if (category_id) {
+          setCategoryId(category_id)
+        } else {
+          console.log("Category NOT FOUND for:", catalogName)
+          setError("Category not found.")
+          setLoading(false)
+        }
+      } catch (err) {
+        console.log("CATEGORY ERROR:", err)
+        setError("Failed to load categories.")
+        setLoading(false)
+      }
     }
     getCategorys()
   }, [catalogName])
 
   useEffect(() => {
-    console.log(categoryId)
     const getCatelogoryDetails = async () => {
       try {
         const res = await getCatalogPageDetail(categoryId)
+        console.log("CATALOG PAGE DETAILS RESPONSE:", res)
         dispatch(setCatalogPageData(res))
+        setLoading(false)
       } catch (error) {
-        console.log("error while getting course details ", error)
+        setError("Failed to load catalog details.")
+        setLoading(false)
       }
     }
     if (categoryId) {
       getCatelogoryDetails()
     }
-  }, [categoryId])
+  }, [categoryId, dispatch])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b text-white flex items-center justify-center">
+        <div className="text-xl">Loading...</div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b text-white flex items-center justify-center">
+        <div className="text-xl text-red-400">{error}</div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b text-white">
@@ -54,12 +86,12 @@ console.log(catalogPageData)
             {" / "}
             <span className="hover:text-sky-300 cursor-pointer transition-colors">Catalog</span>
             {" / "}
-            <span className="text-cyan-400">{catalogPageData?.data?.selectedCategory?.name}</span>
+            <span className="text-cyan-400">{catalogPageData?.data?.selectedCategory?.name || "Unknown"}</span>
           </p>
           <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">
-            {catalogPageData?.data?.selectedCategory?.name}
+            {catalogPageData?.data?.selectedCategory?.name || "Category"}
           </h1>
-          <p className="max-w-3xl text-sky-100/80">{catalogPageData?.data?.selectedCategory?.description}</p>
+          <p className="max-w-3xl text-sky-100/80">{catalogPageData?.data?.selectedCategory?.description || "No description available."}</p>
         </div>
 
         <div className="space-y-16">
@@ -69,17 +101,15 @@ console.log(catalogPageData)
               <div className="mb-4 text-xl font-bold text-white md:text-2xl">Courses to get you started</div>
               <div className="flex border-b border-sky-800/50">
                 <p
-                  className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all ${
-                    !active ? "border-b-2 border-cyan-400 text-cyan-400" : "text-sky-300/70 hover:text-sky-200"
-                  }`}
+                  className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all ${!active ? "border-b-2 border-cyan-400 text-cyan-400" : "text-sky-300/70 hover:text-sky-200"
+                    }`}
                   onClick={() => setActive(false)}
                 >
                   Most Popular
                 </p>
                 <p
-                  className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all ${
-                    active ? "border-b-2 border-cyan-400 text-cyan-400" : "text-sky-300/70 hover:text-sky-200"
-                  }`}
+                  className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all ${active ? "border-b-2 border-cyan-400 text-cyan-400" : "text-sky-300/70 hover:text-sky-200"
+                    }`}
                   onClick={() => setActive(true)}
                 >
                   New
@@ -87,14 +117,14 @@ console.log(catalogPageData)
               </div>
             </div>
             <div className="py-4">
-              <CourseSlider courses={catalogPageData?.data?.mostSellingCourse} />
+              <CourseSlider courses={active ? catalogPageData?.data?.selectedCategory?.courses : catalogPageData?.data?.mostSellingCourse} />
             </div>
           </div>
 
           {/* Section 2: Top Courses */}
           <div className="rounded-xl border border-sky-700/30 p-6 backdrop-blur-sm">
             <p className="mb-6 text-xl font-bold text-white md:text-2xl">
-              Top Courses in {catalogPageData?.data?.selectedCategory?.name}
+              Top Courses in {catalogPageData?.data?.selectedCategory?.name || "Category"}
             </p>
             <div className="py-4">
               <CourseSlider courses={catalogPageData?.data?.selectedCategory?.courses} />
@@ -108,7 +138,7 @@ console.log(catalogPageData)
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2 place-content-center place-items-center">
                 {catalogPageData?.data?.mostSellingCourse?.slice(0, 4).map((course, index) => (
                   <Course_Card course={course} key={index} Height={"h-[250px]"} />
-                ))}
+                )) || <div>No courses available.</div>}
               </div>
             </div>
           </div>

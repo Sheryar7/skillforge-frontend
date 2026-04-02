@@ -18,7 +18,7 @@ function MyProfile() {
             <div className='bg-gray-800/40 border-[1px] border-[#1d436a] rounded-lg p-6 shadow-lg'>
                 <div className='flex flex-col items-start justify-between'>
                     <div className='flex w-full justify-between items-center gap-4 text-white'>
-                        { user.image ? (
+                        { user?.image ? (
                             <img 
                             className='rounded-full w-[60px] h-[60px] object-cover border-2 border-blue-400'
                             src={user?.image} 

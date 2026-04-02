@@ -21,3 +21,17 @@ export async function getCatalogPageDetail(categoryId){
     toast.dismiss(toastId);
     return result
 }
+export async function getAllCategories(){
+    try {
+        const response = await apiConnector("GET", catalogEndpoints.GET_CATEGOIRIES_API);
+        console.log("Get All Categories API response", response);
+        if(!response.data.success){
+            toast.error(response.data.message || "Something went wrong");
+            throw new Error("Could not Fetch Categories");
+        }
+        return response?.data?.allTag || [];
+    } catch (error) {
+        console.log("Get All Categories API error", error);
+        toast.error(error.response?.data?.message || error.message || "Something went wrong while fetching categories");
+    }
+}

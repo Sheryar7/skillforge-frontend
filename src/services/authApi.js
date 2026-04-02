@@ -106,12 +106,12 @@ export function login(email, password, navigate){
 
             }
             toast.success(response.data.message);
-            dispatch(setToken(response.data.accessToken))
-            localStorage.setItem("token", JSON.stringify(response.data.accessToken))
-            localStorage.setItem("user", JSON.stringify(response.data.registeredUser))
-            dispatch(setUser(response.data.registeredUser))
+            dispatch(setToken(response.data.accessToken));
+            localStorage.setItem("token", response.data.accessToken);
+            localStorage.setItem("user", JSON.stringify(response.data.user));
+            dispatch(setUser(response.data.user));
 
-            navigate('/dashboard/profile')
+            navigate('/dashboard/profile');
         } catch (error) {
             console.log("Error while Signing.", error);
             toast.error("Failed to Login")

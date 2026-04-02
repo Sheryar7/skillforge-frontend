@@ -5,8 +5,7 @@ import { ratingAndReviewEndpoints } from "./apis"
 export const createRating = async({courseId,rating,review},token) =>{
     try {
         console.log(token)
-        const response = await apiConnector('POST', ratingAndReviewEndpoints.CREATE_RATING_API,
-            {rating,review,courseId}, { Authentication: `Bearer ${token}` })
+        const response = await apiConnector('POST', ratingAndReviewEndpoints.CREATE_RATING_API, { rating, review, courseId });
         console.log(response.data)
         if(!response.data.success){
             throw new Error(response.data.message)
@@ -16,7 +15,7 @@ export const createRating = async({courseId,rating,review},token) =>{
         
     } catch (error) {
         console.log("Error while creating rating",error)
-        toast.error("Couldn't create rating")
+        toast.error(error?.response?.data?.message || "Couldn't create rating")
         return false
     }
 }

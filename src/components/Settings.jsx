@@ -1,3 +1,4 @@
+import React from 'react'
 import { useRef, useState } from "react";
 // import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
 import { EyeIcon, EyeOff, Upload } from "lucide-react";
@@ -65,6 +66,15 @@ function Settings() {
     dispatch(
       updatePersonalInfo(gender, about, dateOfBirth, contactNumber, token)
     );
+    // Clear the form after saving
+    setFormData({
+      firstName: user?.firstName ?? "",
+      lastName: user?.lastName ?? "",
+      dateOfBirth: "",
+      gender: "Male",
+      contactNumber: "",
+      about: "",
+    });
   };
 
   const deleteAccount = async () => {};

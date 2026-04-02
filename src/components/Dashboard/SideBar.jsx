@@ -16,7 +16,7 @@ const SideBar = () => {
         {
             id:1,
             name: "My Profile",
-            path: "/dashboard/profile",
+            path: "/dashboard/my-profile",
             icon: <CircleUser />
         },
         {

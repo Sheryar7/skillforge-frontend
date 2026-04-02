@@ -21,8 +21,8 @@ const Homepage = () => {
                 <div className="flex flex-col items-center">
 
                     <Link to="/signup">
-                        <div className="p-1 rounded-full bg-slate-900 duration-200 hover:scale-95 transition">
-                            <div className="group flex items-center gap-3 px-6 py-2 rounded-full">
+                        <div className="p-1 rounded-full bg-slate-900 duration-200 hover:scale-95 transition mt-5">
+                            <div className="group flex items-center gap-3 px-6 py-2 rounded-full bg-slate-600 mt-13">
                                 <p className="text-gray-300 text-sm sm:text-base font-roboto">
                                     Become an Instructor
                                 </p>
@@ -87,7 +87,7 @@ const Homepage = () => {
     </div>
 </body>
 </html>`}
-                            codeColor={"text-blue-600"}
+                            codeColor={"text-black"}
                         />
                     </div>
                     <div className="w-full px-4">

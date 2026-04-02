@@ -1,7 +1,7 @@
 "use client"
 
 import { ArrowRight, Plus } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import React,{ useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch, useSelector } from "react-redux"
 import toast from "react-hot-toast"
@@ -14,7 +14,7 @@ function CourseBuilder() {
     register,
     handleSubmit,
     setValue,
-    getValues,
+    // getValues is not used in this component currently
     formState: { errors },
   } = useForm()
   const { course } = useSelector((state) => state.course)
@@ -69,10 +69,8 @@ function CourseBuilder() {
     try {
       if (editSecName) {
         result = await updateSection(
-          { sectionName: data.sectionName, 
-            sectionId: editSecName, 
-            courseId: course._id 
-          }, token,
+          { sectionName: data.sectionName, sectionId: editSecName, courseId: course._id },
+          token,
         )
         console.log("Update result:", result)
         if (result) {

@@ -1,7 +1,36 @@
 @import "tailwindcss"; 
 
-body,html{
+* {
+    box-sizing: border-box;
+}
+
+body, html {
     overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* Ensure full width responsiveness */
+body {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+}
+
+/* Responsive text sizing */
+@media (max-width: 640px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 15px;
+    }
 }
 .image{
     background: url("./assets/back.jpg");

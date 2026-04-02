@@ -23,13 +23,14 @@ function Dashboard() {
         )
     }
   return (
-    <div className="flex flex-col md:flex-row w-full min-h-screen">
-      <div className="w-64 lg:w-72 flex-shrink-0">
+    <div className="flex w-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+      {/* Sidebar */}
+      <div className="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 z-40">
         <SideBar />
       </div>
 
       {/* Main content area */}
-      <div className="md:w-full ms-10  md:ms-0 overflow-auto p-4 justify-end">
+      <div className="ml-64 w-full pt-20 p-6">
         <Outlet />
       </div>
     </div>

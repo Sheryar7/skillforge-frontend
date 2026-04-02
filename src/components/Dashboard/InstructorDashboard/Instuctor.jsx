@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { fetchInstructorCourse } from "../../../services/course"
 import { getInstructorData } from "../../../services/profile"
@@ -14,30 +14,48 @@ function Instuctor() {
   const [instructorData, setInstuctorData] = useState(null)
   const [courses, setCourses] = useState([])
   console.log(user)
+
+  if (!user) {
+    return <div className="text-white">Loading...</div>;
+  }
+  console.log("Instructor Rendered");
+
   useEffect(() => {
+    if (!token) return;
+
     const fetchStats = async () => {
-      setLoading(true)
-      const instructorApiData = await getInstructorData(token)
-      const instructorCourses = await fetchInstructorCourse(token)
+      setLoading(true);
+      try {
+        const instructorApiData = await getInstructorData(token);
+        const instructorCourses = await fetchInstructorCourse(token);
 
-      if (instructorApiData.length) {
-        setInstuctorData(instructorApiData)
-      }
-      if (instructorCourses) {
-        setCourses(instructorCourses)
-      }
-      setLoading(false)
-    }
-    fetchStats()
-  }, [])
+        console.log("Instructor API:", instructorApiData);
+        console.log("Courses:", instructorCourses);
 
-  const totalAmount = instructorData?.reduce((acc, cur) => acc + cur.totalAmount, 0)
-  const totalStudentEnrolled = instructorData?.reduce((acc, cur) => acc + cur.totalStudentsEnrolled, 0)
+        if (Array.isArray(instructorApiData)) {
+          setInstuctorData(instructorApiData);
+        }
+
+        if (Array.isArray(instructorCourses)) {
+          setCourses(instructorCourses);
+        }
+      } catch (error) {
+        console.error("ERROR IN INSTRUCTOR:", error);
+      }
+      setLoading(false);
+    };
+
+    fetchStats();
+  }, [token]);
+
+  const totalAmount = instructorData?.reduce((acc, cur) => acc + cur.totalAmount, 0) || 0
+  const totalStudentEnrolled = instructorData?.reduce((acc, cur) => acc + cur.totalStudentsEnrolled, 0) || 0
+
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       <div className="container mx-auto px-4 py-6">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-white">Hi, {user.firstName}</h1>
+          <h1 className="text-2xl font-bold text-white">Hi, {user?.firstName || "User"}</h1>
         </div>
 
         {loading ? (
@@ -93,11 +111,11 @@ function Instuctor() {
                     />
 
                     <div className="p-3">
-                      <p className="font-medium text-white mb-2 line-clamp-2">{course.courseTitle}</p>
+                      <p className="font-medium text-white mb-2 line-clamp-2">{course.courseName || course.courseTitle || 'Untitled Course'}</p>
 
                       <div className="flex justify-between text-sm">
-                        <p className="text-slate-300">{course.studentsEnrolled.length} students</p>
-                        <p className="font-semibold text-blue-300">Rs {course.price}</p>
+                        <p className="text-slate-300">{(course.studentsEnrolled || []).length} students</p>
+                        <p className="font-semibold text-blue-300">Rs {course.price || 0}</p>
                       </div>
                     </div>
                   </div>

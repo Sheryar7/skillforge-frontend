@@ -33,9 +33,11 @@ function CourseInformation() {
     setLoading(true);
     try {
       const result = await apiConnector("GET", categories.CATEGORIES_API);
-      setCategory(result.data.allTag);
+      console.log("FULL API RESPONSE:", result);
+      setCategory(result?.data?.data || []);
     } catch (error) {
       console.log("Error while fetching Categories: ", error);
+      setCategory([]);
     }
     setLoading(false);
   };
@@ -57,7 +59,7 @@ function CourseInformation() {
   useEffect(() => {
     fetchLinks();
     if (editCourse) {
-      setValue("courseTitle", course.courseTitle);
+      setValue("courseName", course.courseName);
       setValue("courseDescription", course.courseDescription);
       setValue("coursePrice", course.price);
       setValue("courseBenefits", course.whatYouWillLearn);
@@ -69,7 +71,7 @@ function CourseInformation() {
       setValue("courseThumbnail", course.thumbnail);
       // const value =getValues();
       // console.log("value: ", value);
-      setThumbnailPreview(course.thumbnail);  
+      setThumbnailPreview(course.thumbnail);
       // console.log("course.thumbnail: ", course.thumbnail);
     }
   }, [editCourse]);
@@ -84,23 +86,23 @@ function CourseInformation() {
   const onSubmit = async (data) => {
     // console.log(data);
     const current = getValues();
-    console.log("current: ",current)
+    console.log("current: ", current)
     const formData = new FormData();
-    console.log("tags: ",data.courseTag)
+    console.log("tags: ", data.courseTag)
     const parsedTags = data.courseTag.split(",");
     const parsedInstructions = data.courseRequirement.split(",");
-    console.log("parsedTags: ",parsedTags)
+    console.log("parsedTags: ", parsedTags)
 
-    if(editCourse){
+    if (editCourse) {
       formData.append("courseId", course._id);
-      if(course?.courseTitle !== current.courseTitle ){
-      formData.append("courseTitle", data.courseTitle);
+      if (course?.courseName !== current.courseName) {
+        formData.append("courseName", data.courseName);
       }
-      if(course?.courseDescription !== current.courseDescription ){
-      formData.append("courseDescription", data.courseDescription);
+      if (course?.courseDescription !== current.courseDescription) {
+        formData.append("courseDescription", data.courseDescription);
       }
-      if(course?.coursePrice !== current.coursePrice ){
-      formData.append("price", data.coursePrice);
+      if (course?.coursePrice !== current.coursePrice) {
+        formData.append("price", data.coursePrice);
       }
       // if(course?.courseThumbnail !== current.courseThumbnail ){ this code executes if the thumbnail is changed or not
       // formData.append("thumbnail", data.courseThumbnail[0]);
@@ -108,65 +110,65 @@ function CourseInformation() {
       if (newThumbnailSelected && data.courseThumbnail && data.courseThumbnail.length > 0) {
         formData.append("thumbnail", data.courseThumbnail[0])
       }
-      if(course?.courseCategory !== current.courseCategory ){
-      formData.append("category", data.courseCategory);
+      if (course?.courseCategory !== current.courseCategory) {
+        formData.append("category", data.courseCategory);
       }
-      if(course?.courseRequirement !== current.courseRequirement ){
-      formData.append("instructions", JSON.stringify(parsedInstructions));
+      if (course?.courseRequirement !== current.courseRequirement) {
+        formData.append("instructions", JSON.stringify(parsedInstructions));
       }
-      if(course?.courseTag !== current.courseTag ){
-      formData.append("tag", JSON.stringify(parsedTags));
+      if (course?.courseTag !== current.courseTag) {
+        formData.append("tag", JSON.stringify(parsedTags));
       }
-      if(course?.courseBenefits !== current.courseBenefits ){
-      formData.append("whatYouWillLearn", data.courseBenefits);
+      if (course?.courseBenefits !== current.courseBenefits) {
+        formData.append("whatYouWillLearn", data.courseBenefits);
       }
 
 
 
       //TODO: update course pending A flag is needed to if there is any thing to update then api should be called
       setLoading(true);
-     try {
-      const res = await apiConnector("POST", coursesEndpoints.EDIT_COURSE_API,formData,{authentication:`Bearer ${token}`});
-      console.log(res)
-      dispatch(setCourse(res.data.data));
-      dispatch(setStep(2))
-      toast.success("Course Updated successfully")
-     } catch (error) {
-      toast.error("Error Updating course")
-      console.log("error updating course",error)
-     }
+      try {
+        const res = await apiConnector("POST", coursesEndpoints.EDIT_COURSE_API, formData, { authentication: `Bearer ${token}` });
+        console.log(res)
+        dispatch(setCourse(res.data.data));
+        dispatch(setStep(2))
+        toast.success("Course Updated successfully")
+      } catch (error) {
+        toast.error("Error Updating course")
+        console.log("error updating course", error)
+      }
       setLoading(false)
     }
-    else{
-      
-      formData.append("courseTitle", data.courseTitle);
-        
-        formData.append("courseDescription", data.courseDescription);
-        formData.append("price", data.coursePrice);
-        
-        formData.append("thumbnail", data.courseThumbnail[0]);
-        
-        formData.append("category", data.courseCategory);
-        
-        formData.append("instructions", JSON.stringify(parsedInstructions));
-        
-        formData.append("tag", JSON.stringify(parsedTags));
-        
-        formData.append("whatYouWillLearn", data.courseBenefits);
-        
-      // console.log("formData ", formData.get("courseTitle"));
+    else {
+
+      formData.append("courseName", data.courseName);
+
+      formData.append("courseDescription", data.courseDescription);
+      formData.append("price", data.coursePrice);
+
+      formData.append("thumbnail", data.courseThumbnail[0]);
+
+      formData.append("category", data.courseCategory);
+
+      formData.append("instructions", JSON.stringify(parsedInstructions));
+
+      formData.append("tag", JSON.stringify(parsedTags));
+
+      formData.append("whatYouWillLearn", data.courseBenefits);
+
+      // console.log("formData ", formData.get("courseName"));
 
       setLoading(true);
-     try {
-      const res = await apiConnector("POST", coursesEndpoints.CREATE_COURSE_API,formData,{authentication:`Bearer ${token}`});
-      console.log(res)
-      dispatch(setCourse(res.data.course));
-      dispatch(setStep(2))
-      toast.success("Course created successfully")
-     } catch (error) {
-      toast.error("Error creating course")
-      console.log("Error creating course",error)
-     }
+      try {
+        const res = await apiConnector("POST", coursesEndpoints.CREATE_COURSE_API, formData, { authentication: `Bearer ${token}` });
+        console.log(res)
+        dispatch(setCourse(res.data.course));
+        dispatch(setStep(2))
+        toast.success("Course created successfully")
+      } catch (error) {
+        toast.error("Error creating course")
+        console.log("Error creating course", error)
+      }
       setLoading(false)
 
 
@@ -216,11 +218,11 @@ function CourseInformation() {
               type="text"
               className="w-full bg-gray-800 border border-gray-700 rounded-md p-3 focus:outline-none focus:border-blue-500"
               placeholder="Enter Course Title"
-              {...register("courseTitle", { required: "Title is required" })}
+              {...register("courseName", { required: "Title is required" })}
             />
-            {errors.courseTitle && (
+            {errors.courseName && (
               <p className="mt-1 text-sm text-red-500">
-                {errors.courseTitle.message}
+                {errors.courseName.message}
               </p>
             )}
           </div>
@@ -233,8 +235,8 @@ function CourseInformation() {
             <textarea
               className="w-full bg-gray-800 border border-gray-700 rounded-md p-3 h-20 focus:outline-none focus:border-blue-500"
               placeholder="Enter Short Description"
-              {...register("courseBenefits", {
-                required: "Course benefits is required",
+              {...register("courseDescription", {
+                required: "Short description is required",
               })}
             />
             {errors.courseDescription && (
@@ -244,7 +246,7 @@ function CourseInformation() {
             )}
           </div>
 
-          {/* Description */}
+          {/* Benefits */}
           <div>
             <label className="block mb-2">
               Course Benefits <span className="text-red-500">*</span>
@@ -252,10 +254,10 @@ function CourseInformation() {
             <textarea
               className="w-full bg-gray-800 border border-gray-700 rounded-md p-3 h-32 focus:outline-none focus:border-blue-500"
               placeholder="Enter Detailed Description"
-              {...register("courseDescription", { required: "Description is required" })}
+              {...register("courseBenefits", { required: "Course benefits are required" })}
             />
-            {errors.description && (
-              <p className="mt-1 text-sm text-red-500">{errors.description.message}</p>
+            {errors.courseBenefits && (
+              <p className="mt-1 text-sm text-red-500">{errors.courseBenefits.message}</p>
             )}
           </div>
 
@@ -335,6 +337,7 @@ function CourseInformation() {
             >
               <option value="">Choose a Category</option>
               {!loading &&
+                Array.isArray(category) &&
                 category.map((item, index) => (
                   <option key={index} value={`${item?._id}`}>
                     {item?.name}

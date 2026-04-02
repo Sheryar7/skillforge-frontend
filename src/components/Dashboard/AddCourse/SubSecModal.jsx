@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import React,{ useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import toast from "react-hot-toast"
 import { setCourse } from "../../../slices/course"
@@ -9,15 +9,10 @@ import { createSubSec, updateSubSec } from "../../../services/section"
 import { X } from "lucide-react"
 import UploadFile from "./UploadFile"
 
-function SubSecModal({
-  modalData,
-  setModalData,
-  add = false,
-  view = false,
-  edit = false }) {
+function SubSecModal({ modalData, setModalData, add = false, view = false, edit = false }) {
 
-  const [duration, setDuration] = useState(0); // State to store video duration
-
+      const [duration, setDuration] = useState(0); // State to store video duration
+  
   const dispatch = useDispatch()
   const {
     register,
@@ -30,8 +25,7 @@ function SubSecModal({
   const { course } = useSelector((state) => state.course)
   const { token } = useSelector((state) => state.auth)
   const [loading, setLoading] = useState(false)
-  console.log(modalData)
-  
+console.log(modalData)
   useEffect(() => {
     if (view || edit) {
       setValue("lectureTitle", modalData.title)
@@ -51,7 +45,7 @@ function SubSecModal({
       currentData.lectureDesc !== modalData.description ||
       currentData.lectureVideo !== modalData.videoURL
     ) {
-      console.log(currentData.lectureTitle, modalData.title, modalData.description, currentData.lectureDesc, currentData.lectureVideo, modalData.videoUrl)
+      console.log(currentData.lectureTitle, modalData.title,modalData.description, currentData.lectureDesc, currentData.lectureVideo, modalData.videoUrl) 
       return false
     }
     else return true
@@ -72,7 +66,7 @@ function SubSecModal({
     }
     if (currentData.lectureVideo !== modalData.videoURL) {
       formData.append("video", currentData.lectureVideo)
-      formData.append("timeDuration", duration)
+    formData.append("timeDuration", duration)
 
     }
 
@@ -80,13 +74,13 @@ function SubSecModal({
     console.log("updating")
     const result = await updateSubSec(formData, token)
     if (result) {
-      const subSection = course.courseContent.map(section => {
-        return {
-          ...section,
-          subSection: section.subSection.map(sub =>
-            sub._id === result._id ? { ...sub, ...result } : sub
-          )
-        };
+        const subSection = course.courseContent.map(section => {
+          return {
+              ...section,
+              subSection: section.subSection.map(sub => 
+                  sub._id === result._id ? { ...sub, ...result } : sub
+              )
+          };
       });
       dispatch(setCourse({ ...course, courseContent: subSection }))
     }
@@ -120,8 +114,8 @@ function SubSecModal({
     setLoading(true)
     const result = await createSubSec(formData, token)
     if (result) {
-      const updatedSections = course.courseContent.map((section) => section._id === result._id ? result : section)
-      const updatedCourse = { ...course, courseContent: updatedSections }
+      const updatedSections = course.courseContent.map( (section) => section._id === result._id ? result: section )
+      const updatedCourse = { ...course, courseContent:updatedSections }
       dispatch(setCourse(updatedCourse))
     }
     setModalData(null)
@@ -151,7 +145,7 @@ function SubSecModal({
               name="lectureVideo"
               label="Lecture Video"
               setDuration={setDuration}
-              duration={duration}
+                duration={duration}
               register={register}
               setValue={setValue}
               errors={errors}
@@ -187,7 +181,7 @@ function SubSecModal({
               {errors.lectureDesc && <p className="mt-1 text-sm text-red-500">{errors.lectureDesc.message}</p>}
             </div>
 
-            {/* buttons */}
+                {/* buttons */}
             {!view && (
               <div>
                 <button

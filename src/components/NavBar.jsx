@@ -28,8 +28,9 @@ function NavBar() {
   const fetchLinks = async () => {
     try {
       const result = await apiConnector("GET", categories.CATEGORIES_API);
-      setCatalogLinks(result.data.allTag);
-    //   console.log(res);
+      console.log(result);
+      setCatalogLinks(result.data.data);
+      //   console.log(res);
     } catch (error) {
       console.log("Error while fetching Categories: ", error);
     }
@@ -57,57 +58,52 @@ function NavBar() {
       link: "/contact",
     },
   ];
-
+  console.log(catalogLinks)
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <div className="fixed -top-6 left-0 right-0 z-50 pt-2 bg-gray-900 flex flex-col lg:flex-row w-full justify-evenly text-white mt-5 border-b-[1px] border-gray-700 pb-2">
-      <div className="flex justify-between items-center px-4 lg:px-0 lg:w-5/12">
-        {/* <div className="">Logo</div> */}
-        {/* <img className="w-[60px] h-[60px] rounded-full" src={logo} alt="learner" loading="lazy"/> */}
-        <div className="flex flex-col">
-        <p className="font-lobster text-xl font-bold text-orange-400">SkillForge</p>
-        <div className="flex items-center gap-2">
-        <div className=" bg-orange-400 w-[80px] h-[4px] rounded-sm"> </div>
-        <div className="bg-orange-400 w-[4px] h-[4px] rounded-full"></div>
+    <div className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-gray-700 shadow-lg" style={{height: '56px'}}>
+      <div className="flex flex-col lg:flex-row items-center justify-between px-4 lg:px-8 py-1 lg:py-1 min-h-[56px]">
+        {/* Logo Section */}
+        <div className="flex justify-between items-center w-full lg:w-auto">
+          <div className="flex flex-col">
+            <p className="font-lobster text-2xl font-bold text-orange-400">SkillForge</p>
+            <div className="flex items-center gap-2">
+              <div className="bg-orange-400 h-1 rounded-sm" style={{width: '100px'}}></div>
+              <div className="bg-orange-400 rounded-full" style={{width: '3px', height: '3px'}}></div>
+            </div>
+          </div>
+          {/* Hamburger Menu Button */}
+          <button
+            className="lg:hidden p-2 hover:bg-gray-800 rounded-md transition-colors"
+            onClick={toggleMenu}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
-        </div>
-        {/* Hamburger Menu Button */}
-        <button
-          className="lg:hidden p-2 hover:bg-gray-800 rounded-md"
-          onClick={toggleMenu}
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
 
-        {/* Navigation Links */}
         <nav
-          className={`${
-            isMenuOpen ? "flex" : "hidden"
-          } lg:flex absolute lg:relative top-full lg:top-0 left-0 w-full lg:w-auto bg-gray-900 lg:bg-transparent lg:mx-2 lg:mt-0 py-4 lg:py-0 z-50`}
+          className={isMenuOpen ? "flex lg:flex absolute lg:relative top-full lg:top-auto left-0 w-full lg:w-auto bg-gray-900 lg:bg-transparent py-4 lg:py-0 z-50 flex-col lg:flex-row items-center lg:items-center justify-center gap-4 lg:gap-8 lg:flex-1 lg:mx-8" : "hidden lg:flex absolute lg:relative top-full lg:top-auto left-0 w-full lg:w-auto bg-gray-900 lg:bg-transparent py-4 lg:py-0 z-50 flex-col lg:flex-row items-center lg:items-center justify-center gap-4 lg:gap-8 lg:flex-1 lg:mx-8"}
         >
-          <ul className="flex flex-col lg:flex-row w-full lg:w-auto justify-between gap-4 lg:gap-7 items-center lg:items-start text-white font-semibold">
+          <ul className="flex flex-col lg:flex-row w-full lg:w-auto justify-center gap-4 lg:gap-8 items-center text-white font-semibold">
             {navLinks.map((item, index) =>
               item.title === "Catalog" ? (
-                <div key={index} className="relative group cursor-pointer pb-2">
-                  <p className="flex items-center gap-1">
+                <div key={index} className="relative group cursor-pointer">
+                  <div className="flex items-center gap-1 hover:text-orange-400 transition-colors py-2">
                     {item.title}
-                    <IoIosArrowDown className="pt-1" />
-                  </p>
-                  <div
-                    className="w-[140px] bg-white rounded-lg absolute left-1/2 lg:left-[-40%] -translate-x-1/2 lg:translate-x-0 translate-y-[7%]
-                     invisible group-hover:visible group-hover:opacity-100 flex flex-col z-[1000] "
-                  >
-                    <div className="w-6 h-6 bg-white absolute left-[62%] rotate-45 -translate-y-[50%] z-[-1000]"></div>
+                    <IoIosArrowDown className="pt-1 text-sm" />
+                  </div>
+                  <div className="w-36 bg-gray-800 border border-gray-700 rounded-lg absolute invisible group-hover:visible group-hover:opacity-100 flex flex-col shadow-lg" style={{top: '100%', left: '50%', transform: 'translateX(-50%)', marginTop: '8px', zIndex: 1000}}>
+                    <div className="w-6 h-6 bg-gray-800 absolute rotate-45 border-l border-t border-gray-700" style={{top: '-3px', left: '50%', transform: 'translateX(-50%)', zIndex: -1}}></div>
                     {catalogLinks?.length ? (
                       catalogLinks.map((element, index) => {
                         return (
                           <Link
                             key={index}
                             to={`/catalog/${element?.name?.split(" ").join("-").toLowerCase()}`}
-                            className="text-sm text-black hover:bg-purple-600/40 px-4 py-3 rounded-lg"
+                            className="text-sm text-gray-300 hover:bg-blue-600 hover:text-white px-4 py-3 rounded-lg transition-colors first:rounded-t-lg last:rounded-b-lg"
                             onClick={() => setIsMenuOpen(false)}
                           >
                             {element.name}
@@ -126,11 +122,7 @@ function NavBar() {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <li
-                    className={`cursor-pointer ${
-                      location.pathname === item.link
-                        ? "text-orange-600"
-                        : "text-white"
-                    } hover:text-orange-400 transition-all duration-200 hover:scale-95`}
+                    className={location.pathname === item.link ? "cursor-pointer py-2 transition-all duration-200 text-orange-400 border-b-2 border-orange-400" : "cursor-pointer py-2 transition-all duration-200 text-gray-300 hover:text-orange-400"}
                   >
                     {item.title}
                   </li>
@@ -139,75 +131,69 @@ function NavBar() {
             )}
           </ul>
         </nav>
-      </div>
+        {/* Auth Buttons and Cart */}
+        <div className={isMenuOpen ? "flex lg:flex flex-row items-center justify-center lg:justify-end gap-3 lg:gap-4 w-full lg:w-auto mt-4 lg:mt-0 pb-4 lg:pb-0" : "hidden lg:flex flex-row items-center justify-center lg:justify-end gap-3 lg:gap-4 w-full lg:w-auto mt-4 lg:mt-0 pb-4 lg:pb-0"}>
+          {user && user?.accountType !== "Instructor" && (
+            <Link to={"/dashboard/cart"} onClick={() => setIsMenuOpen(false)}>
+              <div className="relative p-2 hover:bg-gray-800 rounded-lg transition-colors">
+                <CiShoppingCart className="w-6 h-6 text-white" />
+                {totalItems > 0 && (
+                  <span className="absolute bg-orange-400 text-white text-xs rounded-full flex items-center justify-center font-semibold" style={{top: '-4px', right: '-4px', width: '20px', height: '20px'}}>
+                    {totalItems}
+                  </span>
+                )}
+              </div>
+            </Link>
+          )}
 
-      {/* Auth Buttons and Cart */}
-      <div
-        className={`${
-          isMenuOpen ? "flex" : "hidden"
-        } lg:flex flex-row justify-end lg:items-center gap-2 mx-12 lg:mx-0 mt-4 lg:mt-0 pb-4 lg:pb-0`}
-      >
-        {user && user?.accountType !== "Instructor" && (
-          <Link to={"/dashboard/cart"} onClick={() => setIsMenuOpen(false)}>
-            <div className="relative">
-              <CiShoppingCart className="w-6 h-6" />
-              {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-orange-400 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                  {totalItems}
-                </span>
-              )}
-            </div>
-          </Link>
-        )}
-
-        {token === null && (
-          <>
-            <Link to={"/login"} onClick={() => setIsMenuOpen(false)}>
-              <button className="w-[80px] bg-gray-800 border-[.1px] border-gray-700 hover:scale-95 transition-all duration-200 py-2 rounded-md">
-                Log In
+          {token === null && (
+            <>
+              <Link to={"/login"} onClick={() => setIsMenuOpen(false)}>
+                <button className="px-4 py-2 bg-gray-800 hover:bg-gray-700 border border-gray-700 text-white rounded-lg transition-all duration-200 font-semibold text-sm">
+                  Log In
+                </button>
+              </Link>
+              <Link to={"/signup"} onClick={() => setIsMenuOpen(false)}>
+                <button className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all duration-200 font-semibold text-sm">
+                  Sign Up
+                </button>
+              </Link>
+            </>
+          )}
+          {token && user && user.accountType !== "Instructor" && (
+            <Link to="/become-instructor" onClick={() => setIsMenuOpen(false)}>
+              <button className="px-3 py-1 text-sm lg:text-base bg-yellow-500 text-black rounded-lg font-semibold hover:bg-yellow-400 transition-all duration-200">
+                Become an Instructor ➜
               </button>
             </Link>
-            <Link to={"/signup"} onClick={() => setIsMenuOpen(false)}>
-              <button className="w-[80px] bg-gray-800 border-[.1px] border-gray-700 hover:scale-95 transition-all duration-200 py-2 rounded-md">
-                Sign Up
-              </button>
-            </Link>
-          </>
-        )}
-        {token && user && (
-          <>
-            <div className="relative group cursor-pointer pb-2">
-              <p className="flex items-center gap-1">
-                
-                { user?.image ? (
-                            <img 
-                            className="rounded-full w-[35px] object-cover h-[35px] bg-orange-500"
-                            src={user?.image} 
-                            alt={`profile ${user?.firstName}`}
-                        />):(
-                            <Avatar 
-                            color={Avatar.getRandomColor('sitebase', ['green', 'orange','red'])} 
-                            name={`${user?.firstName || ""} ${user?.lastName || ""}`} 
-                            size="40" 
-                            round={true} />
-                        )
-                        }
-                
-                <IoIosArrowDown className="pt-1" />
-              </p>
-              <div
-                className="lg:w-[120px]  rounded-lg lg:absolute left-12 lg:left-[-40%] -translate-x-1 lg:translate-x-0 translate-y-[%]
-                    invisible group-hover:visible group-hover:opacity-100 flex flex-col items-center gap-2  py-2"
-              >
-                {
-                  <Link to={"/"} onClick={() => setIsMenuOpen(false)}>
-                    <LoginDropDown />
-                  </Link>
-                }
+          )}
+          {token && user && (
+            <div className="relative group cursor-pointer">
+              <div className="flex items-center gap-2 p-2 hover:bg-gray-800 rounded-lg transition-colors">
+                {user?.image ? (
+                  <img
+                    className="rounded-full object-cover border border-gray-600" style={{width: '36px', height: '36px'}}
+                    src={user?.image}
+                    alt={`profile ${user?.firstName}`}
+                  />
+                ) : (
+                  <Avatar
+                    color={Avatar.getRandomColor('sitebase', ['green', 'orange', 'red'])}
+                    name={`${user?.firstName || ""} ${user?.lastName || ""}`}
+                    size="36"
+                    round={true}
+                  />
+                )}
+                <IoIosArrowDown className="pt-1 text-sm" />
+              </div>
+              <div className="w-36 rounded-lg invisible group-hover:visible group-hover:opacity-100 flex flex-col items-center gap-2 py-2 bg-gray-800 border border-gray-700 shadow-lg" style={{position: 'absolute', top: '100%', right: 0, marginTop: '8px', zIndex: 50}}>
+                <div onClick={() => setIsMenuOpen(false)}>
+                  <LoginDropDown />
+                </div>
               </div>
             </div>
-          </>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

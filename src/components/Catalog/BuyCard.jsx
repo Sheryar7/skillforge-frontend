@@ -60,7 +60,7 @@ function BuyCard({Course}) {
     useEffect(()=>{
         const getEnrolledCourses = async()=>{
             try {
-                const res = await apiConnector("GET", coursesEndpoints.GET_ENROLLED_COURSE_API, null, {authentication: `Bearer ${token}`});
+                const res = await apiConnector("GET", coursesEndpoints.GET_ENROLLED_COURSE_API, null, {Authorization: `Bearer ${token}`});
                 // console.log(res.data.data)
                 if(res.data.success){
                     dispatch(setEnrolled(res.data.data))

@@ -18,6 +18,7 @@ function MyCourses() {
             const result = await fetchInstructorCourse(token)
             if (result) {
                 setCourses(result)
+                console.log(result);
             }
         }
         fetchCourse()

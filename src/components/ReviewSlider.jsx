@@ -27,7 +27,7 @@ function ReviewSlider() {
 
             console.log(data)
             if(data){
-                setReview(data.allReviews)
+                setReview(data.data)
             }
         }
         fetchReview();
