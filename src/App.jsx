@@ -9,7 +9,7 @@ import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
-import HomePage from "./pages/HomePage";
+import Homepage from "./pages/Homepage";
 import NavBar from "./components/NavBar";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -71,7 +71,7 @@ function App() {
       )}
       <NavBar />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
