@@ -33,7 +33,7 @@ html {
     }
 }
 .image{
-    background: url("./assets/back.jpg");
+    background: url("../back.jpg");
 }
 .spinner {
     position: absolute;
