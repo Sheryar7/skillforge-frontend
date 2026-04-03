@@ -1,5 +1,3 @@
-"use client"
-
 import { ArrowRight, Plus } from "lucide-react"
 import React,{ useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
