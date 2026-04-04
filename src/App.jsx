@@ -63,7 +63,7 @@ function App() {
   const { loading: profileLoading } = useSelector(state => state.profile);
 
   return (
-    <div className="min-h-screen bg-[#0e172f] relative">
+    <div className="min-h-screen bg-stone-900 relative">
       {(authLoading || profileLoading) && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
           <div className="spinner scale-150"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>

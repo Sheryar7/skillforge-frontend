@@ -30,7 +30,9 @@ const timeline = [
 
 const TimeLine = () => {
     return (
-        <div className="px-4 sm:px-6 lg:px-8">
+        <div
+            className="px-4 sm:px-6 lg:px-8"
+        >
             <div className="flex flex-col lg:flex-row gap-10 items-center sm:mx-10 md:mx-20 lg:mx-0 pb-10 sm:pb-20">
                 <div className="flex flex-col items-start  lg:items-center gap-6 w-full lg:w-5/12">
                     {timeline.map((item, index) => (

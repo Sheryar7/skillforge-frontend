@@ -64,7 +64,7 @@ function NavBar() {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 border-b border-gray-700 shadow-lg" style={{height: '56px'}}>
+    <div className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-r from-zinc-900 via-zinc-800 to-zinc-900 border-b border-gray-700 shadow-lg" style={{height: '56px'}}>
       <div className="flex flex-col lg:flex-row items-center justify-between px-4 lg:px-8 py-1 lg:py-1 min-h-[56px]">
         {/* Logo Section */}
         <div className="flex justify-between items-center w-full lg:w-auto">

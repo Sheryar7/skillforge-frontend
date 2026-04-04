@@ -17,11 +17,11 @@ const Homepage = () => {
         <div className="w-full">
 
             {/* SECTION 1  */}
-            <div className="relative flex flex-col justify-between items-center text-white">
+            <div className="relative flex flex-col justify-between items-center text-white ">
                 <div className="flex flex-col items-center">
 
                     <Link to="/signup">
-                        <div className="p-1 rounded-full bg-slate-900 duration-200 hover:scale-95 transition mt-5">
+                        <div className="p-1 rounded-full bg-stone-900 duration-200 hover:scale-95 transition mt-5">
                             <div className="group flex items-center gap-3 px-6 py-2 rounded-full bg-slate-600 mt-13">
                                 <p className="text-gray-300 text-sm sm:text-base font-roboto">
                                     Become an Instructor
@@ -133,7 +133,9 @@ def display_tasks():
 
                     {/* Section 3 */}
 
-                    <div className="bg-zinc-100 text-gray-800 w-full">
+                    <div className="bg-zinc-100 text-gray-800 w-full"
+                    
+                    >
                         <div className="image h-[250px]">
                             <div className="h-[120px]"></div>
 
@@ -174,7 +176,7 @@ def display_tasks():
                     </div>
 
                     {/* section 4 */}
-                    <div className="w-full mx-auto my-8 max-w-max overflow-hidden flex flex-col items-center justify-between gap-6 first-letter bg-slate-900 text-white">
+                    <div className="w-full mx-auto my-8 max-w-max overflow-hidden flex flex-col items-center justify-between gap-6 first-letter bg-stone-900 text-white">
                         <InstructorSection />
 
                     </div>
