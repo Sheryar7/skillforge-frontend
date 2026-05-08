@@ -137,7 +137,7 @@ function Login() {
                   transform transition-all duration-300 hover:bg-yellow-500 hover:scale-95
                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800"
           >
-            Sign In
+            Log In
           </button>
         </form>
 
