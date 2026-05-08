@@ -113,7 +113,7 @@ function Signup() {
     };
     
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-blue-950 flex items-center justify-center p-4 mt-12">
             {loading ? (
               <div className="spinner mx-auto">
           <div></div>   
